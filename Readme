@@ -1,4 +1,4 @@
-TODO
+# TODO
 These are the things yet to be done.
 1. Ship the connector library with the code, so that the client does not have to install it.
 2. Read mysql connection params from a config file instead of hardcoding them.
@@ -6,18 +6,18 @@ These are the things yet to be done.
 4. Add everything into a docker container so that the client doesnt have to install myqsl server as well.
 
 
-PRE-REQUISITES
+# PRE-REQUISITES
 cmake
 Mysql server
 mysql-connector-c++-8.0.18 - cpp connector library for mysql
 
-MYSQL SERVER SETUP INSTRUCTIONS
+# MYSQL SERVER SETUP INSTRUCTIONS
 1. Setup mysql server on your machine.
 2. Create a database named "rewards".
 3. Execute the instruction given in db_config/db commands.
 4. Update the mysql connection params in db_config/rewards_db_config.
 
-BUILD INSTRUCTIONS
+# BUILD INSTRUCTIONS
 1. Unzip the code.
 2. Install mysql-connector-c++-8.0.18(https://dev.mysql.com/downloads/connector/cpp/).
 3. Open the CMakeLists.txt in the root directory of the project and set "FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR" to the location of your mysql connector library installation directory.
