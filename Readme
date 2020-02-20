@@ -1,6 +1,6 @@
 # TODO
 These are the things yet to be done.
-1. Ship the connector library with the code, so that the client does not have to install it.
+1. Ship the my sql connector library with the code, so that the client does not have to install it.
 2. Read mysql connection params from a config file instead of hardcoding them.
 3. Write an integration test.
 4. Add everything into a docker container so that the client doesnt have to install myqsl server as well.
