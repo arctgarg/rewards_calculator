@@ -11,15 +11,14 @@ using std::string;
 using std::cout;
 using std::endl;
 
-void RewardsDbConnector::init() {
+RewardsDbConnector::RewardsDbConnector(string hostname, string username, string password)
+{
     auto driver = sql::mysql::get_driver_instance();
-    string host  = "localhost";
-    string username = "root";
-    string password = "root";
-    d_connectionPtr = driver->connect(host, username, password);
+    d_connectionPtr = driver->connect(hostname, username, password);
     cout << "  connection status " << d_connectionPtr->isValid() << endl;
     d_connectionPtr->setSchema("rewards");
 }
+
 
 int RewardsDbConnector::getClientRewardPoints(string clientId) {
     auto statement = d_connectionPtr->prepareStatement("select reward_points from client_rewards where client_id = ?");

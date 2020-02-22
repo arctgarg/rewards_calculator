@@ -12,8 +12,8 @@ using std::cout;
 using std::endl;
 
 RewardsCalculator::RewardsCalculator(std::shared_ptr<TransactionReader> transactionReader,
-                                     std::shared_ptr<RewardRuleResolver> ptr) : d_transactionReader(transactionReader), d_rewardRuleResolver(ptr){
-    d_rewardsDb.init();
+                                     std::shared_ptr<RewardRuleResolver> ptr,
+                                     std::shared_ptr<RewardsDbConnector> dbConnectorPtr) : d_transactionReader(transactionReader), d_rewardRuleResolver(ptr), d_rewardsDbConnector(dbConnectorPtr){
 }
 
 void RewardsCalculator::calculate() {
@@ -26,18 +26,18 @@ void RewardsCalculator::calculate() {
         {
             auto rule = d_rewardRuleResolver->findApplicableRule(transaction);
             auto rewardPoints = rule.getRewardPoints(transaction);
-            auto previousRewardPoints = d_rewardsDb.getClientRewardPoints(transaction.getCustomerId());
+            auto previousRewardPoints = d_rewardsDbConnector->getClientRewardPoints(transaction.getCustomerId());
             if(previousRewardPoints < 0)
             {
-                d_rewardsDb.addClientRewardPoints(transaction.getCustomerId(), transaction.getCustomerName(), std::max(0, rewardPoints));
+                d_rewardsDbConnector->addClientRewardPoints(transaction.getCustomerId(), transaction.getCustomerName(), std::max(0, rewardPoints));
                 continue;
             }
             auto newRewardPoints = std::max(previousRewardPoints + rewardPoints, 0);
-            d_rewardsDb.updateClientRewardPoints(transaction.getCustomerId(), newRewardPoints);
+            d_rewardsDbConnector->updateClientRewardPoints(transaction.getCustomerId(), newRewardPoints);
         }
     }
 
-    auto clientRewardData = d_rewardsDb.getAllClientRewardPointsData();
+    auto clientRewardData = d_rewardsDbConnector->getAllClientRewardPointsData();
     for(auto& clientData : clientRewardData)
     {
         cout << "clientId :" << clientData.clientId << " client name :" << clientData.clientName << " reward points :" << clientData.rewardPoints << endl;

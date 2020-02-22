@@ -18,8 +18,9 @@ struct ClientRewardPoints{
 
 class RewardsDbConnector {
 public:
+    RewardsDbConnector(string hostname, string username, string password);
+
     ~RewardsDbConnector();
-    void init();
 
     int getClientRewardPoints(string clientId);
 
