@@ -1,1 +1,3 @@
+create database rewards;
+use rewards;
 create table client_rewards (client_id VARCHAR(40), client_name VARCHAR(40), reward_points INT);
