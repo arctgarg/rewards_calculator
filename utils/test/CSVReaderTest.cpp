@@ -6,6 +6,8 @@
 #include <CSVReader.h>
 
 using std::string;
+using std::cout;
+using std::endl;
 
 class CSVReaderTest : public ::testing::Test
 {
@@ -17,8 +19,9 @@ protected:
 
 TEST_F(CSVReaderTest, testReadCSV)
 {
-    CSVReader csvReader("/Users/agarg145/CLionProjects/transferwise/utils/test/transactions_test_data.csv");
+    CSVReader csvReader("/home/rewards_calculator/utils/test/transactions_test_data.csv");
     auto result = csvReader.getNextRecords(15);
+    cout << "Result size " << result.size() << endl;
     ASSERT_EQ(result.size(), 2);
     ASSERT_EQ( result[0], d_transaction1);
     ASSERT_EQ( result[1], d_transaction2);
@@ -26,7 +29,7 @@ TEST_F(CSVReaderTest, testReadCSV)
 
 TEST_F(CSVReaderTest, testReadInputMoreThanRecordsInFile)
 {
-    CSVReader csvReader("/Users/agarg145/CLionProjects/transferwise/utils/test/transactions_test_data.csv");
+    CSVReader csvReader("/home/rewards_calculator/utils/test/transactions_test_data.csv");
     auto result = csvReader.getNextRecords(15);
     ASSERT_EQ(result.size(), 2);
 }

@@ -6,7 +6,8 @@
 #define TRANSFERWISE_REWARDSDBCONNECTOR_H
 
 #include <string>
-#include <jdbc/cppconn/connection.h>
+#include <vector>
+#include <mysql_connection.h>
 
 using std::string;
 

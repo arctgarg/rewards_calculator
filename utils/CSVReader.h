@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-
+#include <memory>
 class CSVReader {
 
 public:

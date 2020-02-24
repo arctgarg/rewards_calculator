@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     auto dbpassword = argv[4];
 
     std::shared_ptr<TransactionReader> transactionReader = std::make_shared<TransactionsCSVReader>(transactionsFile);
-    auto ruleReader = RewardRuleCSVReader("/Users/agarg145/CLionProjects/transferwise/rewards/reward_rules.csv");
+    auto ruleReader = RewardRuleCSVReader("/home/rewards_calculator/rewards/reward_rules.csv");
     std::shared_ptr<RewardRuleResolver> ruleResolver = std::make_shared<RewardRuleResolver>(ruleReader.readRules());
     std::shared_ptr<RewardsDbConnector> dbConnector = std::make_shared<RewardsDbConnector>(dbHostname, dbusername, dbpassword);
     RewardsCalculator rewardsCalculator(transactionReader, ruleResolver, dbConnector);

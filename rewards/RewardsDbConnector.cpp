@@ -4,8 +4,9 @@
 
 #include "RewardsDbConnector.h"
 
-#include <mysql/jdbc.h>
+#include <mysql_driver.h>
 #include <vector>
+#include <cppconn/prepared_statement.h>
 
 using std::string;
 using std::cout;
