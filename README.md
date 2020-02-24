@@ -1,43 +1,40 @@
 This project reads transaction data of customers and calculates reward points for them.
 
-## Pre-requisites
-1. cmake
-2. Mysql server
-3. mysql-connector-c++-8.0.18 - cpp connector library for mysql
+### PRE-REQUISITES
+Docker
 
-### Cmake installation instructions
-1. On mac, install using "brew install cmake".
-2. You can find similar set up instructions on linux using apt-get.
+### INSTRUCTIONS
+Run the following commands:
 
-### Mysql server setup
-1. Setup mysql server on your machine.
-2. Execute the instruction given in db_config/db commands to set up the database.
+```
+docker pull agarg145/reward_calculator
+docker run -it agarg145/reward_calculator bash
+chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+service mysql start
+cd /home/rewards_calculator/build && ./transferwise ../transactions.csv localhost archit password
+```
 
-### Mysql connector lib setup
-1. Install mysql connector library for your os from https://dev.mysql.com/downloads/connector/cpp/.
-2. Set environment variable MYSQL_CONNECTOR_INSTALL_DIR equal to the install location of the connector lib. You can do that using the export command eg.
-    "export MYSQL_CONNECTOR_INSTALL_DIR=/usr/local/mysql-connector-c++-8.0.18"
+####To view the results in mysql
 
-## Build
-1. Run "git clone https://github.com/arctgarg/rewards_calculator.git" to clone this repo.
-2. cd rewards_calculator.
-3. mkdir build && cd build.
-4. cmake ../. && make clean all test install.
+Run the following inside your docker container
 
-## MacOs specific settings
-If on mac, you would need to set an additional environment variable called DYLD_LIBRARY_PATH.
-Run "export DYLD_LIBRARY_PATH=${MYSQL_CONNECTOR_INSTALL_DIR}/lib64".
+```mysql -u archit -p```
 
-You may need to do similar setup for other operating systems as well.
+Give "password" as the password when prompted.
+```
+use rewards;
+select * from client_rewards;
+```
 
-## Run instructions
-Once you have the binary ready, either from the above build steps or from the pre-build zip file, you can run the executable via
-"./transferwise {{TRANSACTION_FILE_PATH}} {{DB_HOSTNAME}} {{DB_USERNAME}} {{DB_PASSWORD}}". Example: "./transferwise ../transactions.csv localhost root root"
+####To find your container id
+`docker ps -a`
 
-The output is printed on the command line, and also updated in the database.
+Grab the container id against our newly pulled image. 
 
-## TODO
-These are the things yet to be done.
-1. Ship the my sql connector library with the code, so that the client does not have to install it.
-2. Write an integration test.
-3. Add everything into a docker container so that the client doesnt have to install myqsl server as well.
+####To copy your own transactions file into docker container
+```
+docker cp {{LOCAL_FILE_PATH}} {{DOCKER_CONTAINER_ID}}:/home/rewards_calculator/
+
+```
+
+You can now run the executable with your file as input
