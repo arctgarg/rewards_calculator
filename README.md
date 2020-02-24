@@ -14,7 +14,7 @@ service mysql start
 cd /home/rewards_calculator/build && ./transferwise ../transactions.csv localhost archit password
 ```
 
-####To view the results in mysql
+#### To view the results in mysql
 
 Run the following inside your docker container
 
@@ -26,12 +26,12 @@ use rewards;
 select * from client_rewards;
 ```
 
-####To find your container id
+#### To find your container id
 `docker ps -a`
 
 Grab the container id against our newly pulled image. 
 
-####To copy your own transactions file into docker container
+#### To copy your own transactions file into docker container
 ```
 docker cp {{LOCAL_FILE_PATH}} {{DOCKER_CONTAINER_ID}}:/home/rewards_calculator/
 
